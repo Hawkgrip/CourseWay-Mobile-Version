@@ -1,42 +1,43 @@
-// SplashPage.js
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, Animated } from 'react-native';
 
-const SplashPage = () => {
-  const [fadeAnim] = useState(new Animated.Value(0));  // Initial opacity value
-
+const SplashPage = ({ navigation }) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;  
   useEffect(() => {
-    // Start animation
     Animated.timing(fadeAnim, {
-      toValue: 1,   // Final opacity value
-      duration: 2000, // Duration for the animation
+      toValue: 1,  
+      duration: 2000, 
       useNativeDriver: true,
     }).start();
+
+    setTimeout(() => {
+      navigation.replace('HomePage');
+    }, 4000); 
   }, [fadeAnim]);
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f0f0' }}>
+      {/* Animated text with fade-in effect */}
       <Animated.Text
-        style={[styles.text, { opacity: fadeAnim }]}
+        style={{
+          fontSize: 40,
+          fontWeight: 'bold',
+          color: '#007BFF',  // Blue color for the text
+          opacity: fadeAnim,  // Bind the opacity to fadeAnim
+          transform: [
+            {
+              translateY: fadeAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [50, 0],  // Move text from bottom to top
+              }),
+            }
+          ],
+        }}
       >
-        Course Way
+        CourseWay
       </Animated.Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ecf0f1',
-  },
-  text: {
-    fontSize: 50,
-    fontWeight: 'bold',
-    color: '#00aeff', // Blue color
-  },
-});
 
 export default SplashPage;
