@@ -1,16 +1,24 @@
-// SignUpPage.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 const SignUpPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (email && password) {
-      Alert.alert('Sign Up Successful', 'You have successfully signed up!');
-      // Navigate to LoginPage after successful sign-up
-      navigation.replace('LoginPage');
+      // Save the data to AsyncStorage
+      try {
+        await AsyncStorage.setItem('userEmail', email); // Store email
+        await AsyncStorage.setItem('userPassword', password); // Store password
+
+        Alert.alert('Sign Up Successful', 'You have successfully signed up!');
+        navigation.replace('LoginPage'); // Navigate back to LoginPage
+      } catch (error) {
+        console.error('Error saving data to AsyncStorage', error);
+        Alert.alert('Error', 'Something went wrong during sign up');
+      }
     } else {
       Alert.alert('Sign Up Failed', 'Please fill in all fields');
     }

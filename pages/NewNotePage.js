@@ -37,7 +37,13 @@ const HomePage = ({ navigation }) => {
           />
         </View>
       </View>
-      
+
+      {/* Welcome Text Section */}
+      <View style={styles.welcomeSection}>
+        <Text style={styles.welcomeTitle}>Welcome to CourseWay</Text>
+        <Text style={styles.welcomeSubtitle}>A portal to the study world, where you can find all the resources you need to succeed!</Text>
+      </View>
+
       <ScrollView>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Add New Note</Text>
@@ -83,9 +89,25 @@ const styles = StyleSheet.create({
   },
   headerButtons: {
     marginTop: 10,
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+  },
+  welcomeSection: {
+    marginBottom: 20,
+    textAlign: 'center',
+    alignItems: 'center',
+  },
+  welcomeTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#007BFF',
+    marginBottom: 10,
+  },
+  welcomeSubtitle: {
+    fontSize: 16,
+    color: '#555',
+    textAlign: 'center',
   },
   card: {
     marginBottom: 20,
@@ -99,6 +121,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#007BFF',
     marginBottom: 10,
+  },
+  cardDescription: {
+    fontSize: 12,
+    color: '#555',
+    marginBottom: 15,
   },
 });
 
